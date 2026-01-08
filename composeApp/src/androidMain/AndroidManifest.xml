@@ -17,6 +17,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <!--geniforandroid://www.geniforandroid.sternbach.org/(de)authorize-->
+
+        <activity
+            android:name="sternbach.software.geniforandroid.auth.RequestAuthorizationActivity"
+            android:exported="true" />
+
+        <activity
+            android:name="sternbach.software.geniforandroid.auth.OnAuthorizedActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="www.geniforandroid.sternbach.org"
+                    android:path="/authorize"
+                    android:scheme="geniforandroid" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="sternbach.software.geniforandroid.auth.OnDeAuthorizedActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="www.geniforandroid.sternbach.org"
+                    android:path="/deauthorize"
+                    android:scheme="geniforandroid" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
