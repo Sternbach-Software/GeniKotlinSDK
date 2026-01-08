@@ -1,4 +1,4 @@
-package sternbach.software.geniandroidsdk.model
+package org.sternbach.software.genikotlinsdk.api.model
 
 data class Date(
     val circa: Boolean, //	Indicates wether the date is an approximation

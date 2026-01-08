@@ -1,4 +1,4 @@
-package sternbach.software.geniandroidsdk.model
+package org.sternbach.software.genikotlinsdk.api.model
 
 data class ProfileRequest(
     val fields: List<String>? = null,

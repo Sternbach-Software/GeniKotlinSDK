@@ -1,4 +1,4 @@
-package sternbach.software.geniandroidsdk.model
+package org.sternbach.software.genikotlinsdk.api.model
 
 data class Profile(
     val about_me: String? = null, //Profile's about me section (cf. detail_strings) (must be requested)

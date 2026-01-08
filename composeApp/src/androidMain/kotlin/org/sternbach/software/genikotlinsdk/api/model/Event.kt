@@ -1,4 +1,4 @@
-package sternbach.software.geniandroidsdk.model
+package org.sternbach.software.genikotlinsdk.api.model
 
 data class Event(
     val date: Date, //	Event's date
