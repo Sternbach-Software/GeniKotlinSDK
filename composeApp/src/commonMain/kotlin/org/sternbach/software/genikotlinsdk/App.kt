@@ -1,7 +1,5 @@
 package org.sternbach.software.genikotlinsdk
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,17 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import genikotlinsdk.composeapp.generated.resources.Res
-import genikotlinsdk.composeapp.generated.resources.compose_multiplatform
+import org.sternbach.software.genikotlinsdk.api.GeniApiClientV1
+import org.sternbach.software.genikotlinsdk.auth.AuthenticationManager
+import org.sternbach.software.genikotlinsdk.auth.TokenStore
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        val token by TokenStore.token.collectAsState()
+        var profileName by remember { mutableStateOf<String?>(null) }
+        val scope = rememberCoroutineScope()
+
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
@@ -31,17 +32,27 @@ fun App() {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+            if (token == null) {
+                Button(onClick = { AuthenticationManager.startAuth() }) {
+                    Text("Login with Geni")
+                }
+            } else {
+                Text("Logged in!")
+                Button(onClick = {
+                     scope.launch {
+                         try {
+                             val client = GeniApiClientV1(token!!)
+                             val profile = client.getProfile()
+                             profileName = profile.name
+                         } catch (e: Exception) {
+                             profileName = "Error: ${e.message}"
+                         }
+                     }
+                }) {
+                    Text("Fetch Profile")
+                }
+                if (profileName != null) {
+                    Text("Hello, $profileName")
                 }
             }
         }
