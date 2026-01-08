@@ -11,4 +11,13 @@ actual object AuthenticationManager {
             Desktop.getDesktop().browse(URI(url))
         }
     }
+
+    actual fun checkAuth() {
+        // Desktop needs a way to receive the token.
+        // Currently manual paste or local server is needed.
+    }
+
+    actual fun logout() {
+        TokenStore.setToken(null)
+    }
 }

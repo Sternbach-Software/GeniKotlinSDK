@@ -9,7 +9,7 @@ actual object AuthenticationManager {
         val url = "https://www.geni.com/platform/oauth/authorize?client_id=$appId&redirect_uri=$redirectUri&response_type=token&display=web"
         window.location.href = url
     }
-     fun checkAuth() {
+     actual fun checkAuth() {
         val hash = window.location.hash
         if (hash.startsWith("#")) {
              val params = hash.substring(1).split("&").associate {
@@ -22,5 +22,9 @@ actual object AuthenticationManager {
                 window.location.hash = ""
             }
         }
+    }
+
+    actual fun logout() {
+        TokenStore.setToken(null)
     }
 }

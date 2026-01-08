@@ -10,7 +10,7 @@ actual object AuthenticationManager {
         window.location.href = url
     }
 
-    fun checkAuth() {
+    actual fun checkAuth() {
         val hash = window.location.hash
         if (hash.startsWith("#")) {
              val params = hash.substring(1).split("&").associate {
@@ -23,5 +23,9 @@ actual object AuthenticationManager {
                 window.location.hash = ""
             }
         }
+    }
+
+    actual fun logout() {
+        TokenStore.setToken(null)
     }
 }

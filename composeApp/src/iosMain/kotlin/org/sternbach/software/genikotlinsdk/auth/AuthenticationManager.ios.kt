@@ -9,15 +9,18 @@ import platform.UIKit.UIWindow
 import platform.darwin.NSObject
 
 actual object AuthenticationManager {
+    private var session: ASWebAuthenticationSession? = null
+
     actual fun startAuth() {
         val appId = "682"
         val authUrl = NSURL(string = "https://www.geni.com/platform/oauth/authorize?client_id=$appId&redirect_uri=geniforandroid://www.geniforandroid.sternbach.org/authorize&response_type=token&display=mobile")
         val callbackUrlScheme = "geniforandroid"
 
-        val session = ASWebAuthenticationSession(
+        val newSession = ASWebAuthenticationSession(
             uRL = authUrl,
             callbackURLScheme = callbackUrlScheme,
             completionHandler = { callbackUrl: NSURL?, error: NSError? ->
+                session = null // Release session on completion
                 if (callbackUrl != null) {
                     val fragment = callbackUrl.fragment
                     if (fragment != null) {
@@ -40,7 +43,16 @@ actual object AuthenticationManager {
             }
         }
 
-        session.presentationContextProvider = presentationContextProvider
-        session.start()
+        newSession.presentationContextProvider = presentationContextProvider
+        newSession.start()
+        session = newSession // Keep strong reference
+    }
+
+    actual fun checkAuth() {
+        // iOS handles this via completion handler of session.
+    }
+
+    actual fun logout() {
+        TokenStore.setToken(null)
     }
 }

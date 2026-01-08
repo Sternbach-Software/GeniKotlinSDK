@@ -25,6 +25,11 @@ fun App() {
         var profileName by remember { mutableStateOf<String?>(null) }
         val scope = rememberCoroutineScope()
 
+        // Check for auth token on startup (useful for Web)
+        LaunchedEffect(Unit) {
+            AuthenticationManager.checkAuth()
+        }
+
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
@@ -53,6 +58,13 @@ fun App() {
                 }
                 if (profileName != null) {
                     Text("Hello, $profileName")
+                }
+
+                Button(onClick = {
+                    AuthenticationManager.logout()
+                    profileName = null
+                }) {
+                    Text("Logout")
                 }
             }
         }

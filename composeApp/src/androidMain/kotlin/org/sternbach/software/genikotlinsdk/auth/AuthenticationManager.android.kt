@@ -21,4 +21,13 @@ actual object AuthenticationManager {
             println("AuthenticationManager: Context not initialized")
         }
     }
+
+    actual fun checkAuth() {
+        // Android handles this via OnAuthorizedActivity which sets the token.
+        // No explicit check needed on start if persisted, but we are using in-memory for now.
+    }
+
+    actual fun logout() {
+        TokenStore.setToken(null)
+    }
 }

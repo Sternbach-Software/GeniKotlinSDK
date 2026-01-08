@@ -4,5 +4,16 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>org.sternbach.software.genikotlinsdk</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>geniforandroid</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
