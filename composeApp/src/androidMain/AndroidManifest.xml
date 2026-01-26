@@ -22,11 +22,11 @@
         <!--geniforandroid://www.geniforandroid.sternbach.org/(de)authorize-->
 
         <activity
-            android:name="sternbach.software.geniforandroid.auth.RequestAuthorizationActivity"
+            android:name="org.sternbach.software.genikotlinsdk.auth.RequestAuthorizationActivity"
             android:exported="true" />
 
         <activity
-            android:name="sternbach.software.geniforandroid.auth.OnAuthorizedActivity"
+            android:name="org.sternbach.software.genikotlinsdk.auth.OnAuthorizedActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
